@@ -78,8 +78,7 @@ class User {
 	
 		if (user_file) {
 			User obj1("Alex", "qwerty", "12345");
-			
-			// Запишем данные по в файл
+				// Запишем данные  в файл
 			user_file << obj1 << endl;
 			User obj2("Alexander", "next", "456678");
 			user_file << obj2 << endl;
@@ -99,9 +98,7 @@ class User {
 		{
 			cout << "Could not open file users.txt !" << '\n';
 			return 0;
-	
 		}
-		
 		user_file.close(); 
 		return 0;
 	  }
