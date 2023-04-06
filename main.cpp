@@ -24,10 +24,10 @@ int main()
   User user("Alex", "alex", "12345");
     writeuserfile(user);
    readuserfile();
-   readmessagefile();
+   read_messagefile();
     Message message("Vsem privet", "Alex", "ALL");
     writemessagefile(message);
-    readmessagefile();
+    read_messagefile();
     
 	return 0;
 }

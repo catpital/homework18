@@ -3,7 +3,7 @@
 #include <fstream> 	
 #include <stdio.h>
 #include <stdlib.h>
-#include <io.h>
+//#include <io.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <vector>
@@ -24,7 +24,7 @@ public:
     string receiver;
     Message(string _text, string _sender, string _reciver) : text(_text), sender(_sender), receiver(_receiver) {}
     //Message() ;
-    ~Message();
+    //~Message();
         friend fstream& operator >>(fstream& is, Message& obj);
     friend ostream& operator <<(ostream& os, const Message& obj);
 };
@@ -45,48 +45,34 @@ ostream& operator <<(ostream& os, const Message& obj)
     return os;
 }
 void writemessagefile(Message _message) {
-   
-    fstream mess_file = fstream("filemessage.txt", ios::in | ios::out);
+     fstream mess_file = fstream("filemessage.txt", ios::in | ios::out);
     if (!mess_file)
-        // 	// Для создания файла используем параметр ios::trunc
+        // 	 Для создания файла используем параметр ios::trunc
     {
         cout << "файл не существует" << endl;
         cout << "создаем файл" << endl;
         mess_file = fstream("filemessage.txt", ios::in | ios::out | ios::trunc);
 #if defined(__linux__) 
         {
-            int stat = _chmod("filemessage.txt", S_IRUSR | S_IWUSR | S_IXUSR);
+            int stat = chmod("filemessage.txt", S_IRUSR | S_IWUSR | S_IXUSR);
         }
 #endif
         cout << "создан пустой файл" << endl;
         return;
     }
-
-
     else {
-        //int i = 1;
-        
-        /*_message.begin();
-        while (!message.end())*/
-       // for (auto i :_message)
-        if (mess_file) {
+             if (mess_file) {
             mess_file.seekg(0, ios_base::end);
-            // 	 записываем данные в файла
+            // 	 записываем данные в файл
             mess_file << _message << std::endl;
                        }
-           
-        }
+                   }
         mess_file.close();
     }
 
-
-
-void readmessagefile()
+void read_messagefile()
 {
-    // int fr = -1;
-    // ifstream file("filemessage.txt");
-    // if (fr == file.is_open())
-    //     //"fileuser.txt", O_RDWR | O_CREAT, 0777))
+    
     fstream mess_file = fstream("filemessage.txt", ios::in | ios::out);
     if (!mess_file)
         // 	// Для создания файла используем параметр ios::trunc
@@ -96,14 +82,12 @@ void readmessagefile()
         mess_file = fstream("filemessage.txt", ios::in | ios::out | ios::trunc);
 #if defined(__linux__) 
         {
-            int stat = _chmod("filemessage.txt", S_IRUSR | S_IWUSR | S_IXUSR);
+            int stat = chmod("filemessage.txt", S_IRUSR | S_IWUSR | S_IXUSR);
         }
 #endif
         cout << "создан пустой файл" << endl;
         return;
     }
-
-
     else {
         int i = 1;
         mess_file.seekg(0, ios_base::beg);
@@ -114,11 +98,9 @@ void readmessagefile()
             // 	 Считываем данные из файла
             mess_file >> message;;
             message_t.push_back(message);
-            // 		//user_file >> obj2;
             cout << "строчка " << i << message_t.back() << endl;
-
             i++;
         }
-        mess_file.close();
-    }
+     }
+    mess_file.close();
 }

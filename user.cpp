@@ -3,14 +3,14 @@
 #include <fstream> 	
 #include <stdio.h>
 #include <stdlib.h>
-#include <io.h>
+// #include <io.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <vector>
 #include <sstream>
 #include <filesystem>
 //using namespace std;
-using namespace std::filesystem;
+//using namespace filesystem;
 //int S_IRUSR ;
 //int S_IWUSR ;
 //int S_IXUSR ;
@@ -50,6 +50,34 @@ std::ostream& operator <<(std::ostream& os, const User& obj)
 }
 
 void writeuserfile(User _user) {
+   std::fstream user_file = std::fstream("fileuser.txt", std::ios::in | std::ios::out);
+    if (!user_file)
+        // 	// Для создания файла используем параметр ios::trunc
+    {
+        std::cout << "файл не существует" << std::endl;
+        std::cout << "создаем файл" << std::endl;
+        user_file = std::fstream("fileuser.txt", std::ios::in | std::ios::out | std::ios::trunc);
+#if defined(__linux__)
+        {
+            int stat = chmod(userpath, S_IRUSR | S_IWUSR | S_IXUSR);
+        }
+#endif
+        std::cout << "создан пустой файл" << std::endl;
+        return;
+    }
+
+    else {
+        int i = 1;
+        user_file.seekg(0, std::ios_base::end);
+        
+             // 	 записываем данные в файл
+            user_file << _user << std::endl;
+            
+          
+            std::cout << "записана строчка " << std::endl;
+             
+        }
+        user_file.close(); 
 }
 
 void readuserfile() {
@@ -63,7 +91,7 @@ void readuserfile() {
         user_file = std::fstream("fileuser.txt", std::ios::in | std::ios::out | std::ios::trunc);
 #if defined(__linux__)
         {
-            int stat = _chmod(userpath, S_IRUSR | S_IWUSR | S_IXUSR);
+            int stat = chmod(userpath, S_IRUSR | S_IWUSR | S_IXUSR);
         }
 #endif
         std::cout << "создан пустой файл" << std::endl;
